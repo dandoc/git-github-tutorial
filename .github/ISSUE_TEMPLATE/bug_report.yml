@@ -1,0 +1,31 @@
+name: "🐛 Bug Report (버그 수정)"
+description: "발견된 버그나 오류를 보고할 때 작성하는 이슈 템플릿입니다."
+title: "[Fix] 버그명"
+labels: ["bug"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🚨 버그 현상
+        어떤 버그가 발생하는지 상세히 설명해 주세요.
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: "🔄 재현 경로"
+      placeholder: "1. 로그인 버튼을 누른다.\n2. 비밀번호를 틀린다.\n3. 화면이 하얗게 멈춘다."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: "🎯 기대 결과"
+      placeholder: "원래 어떻게 동작해야 하는지 적어주세요. (예: '비밀번호가 틀렸습니다' 안내 문구가 나와야 함)"
+    validations:
+      required: true
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: "📸 스크린샷"
+      placeholder: "에러 로그나 에러 화면 스크린샷이 있다면 첨부해 주세요."

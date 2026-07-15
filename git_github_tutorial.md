@@ -76,6 +76,37 @@ stateDiagram-v2
 
 ---
 
+### 💻 실제 예시로 보는 파일 상태 변화 흐름
+
+터미널에서 `git status`(현재 파일들의 상태 확인) 명령어를 입력했을 때 나타나는 변화와 함께 매핑해서 이해해 봅시다.
+
+#### 1단계: 🆕 새 파일 생성 (Untracked)
+* **어떤 상태인가요?** 에디터에서 `hello.txt`라는 새로운 파일을 만들고 저장했을 때입니다.
+* **`git status` 입력 시**:
+  * 빨간색 글씨로 `Untracked files:` 목록에 `hello.txt`가 노출됩니다.
+  * *이 상태에서는 컴퓨터가 꺼지거나 파일이 날아가도 Git이 복구해 주지 못합니다.*
+
+#### 2단계: 📦 커밋 대기 상자에 담기 (Staged)
+* **어떻게 하나요?** `git add hello.txt` 명령어를 실행합니다.
+* **`git status` 입력 시**:
+  * 초록색 글씨로 `Changes to be committed:` 목록 아래에 `new file: hello.txt`로 바뀝니다.
+  * 다음 버전에 저장할 준비가 끝난 상태입니다.
+
+#### 3단계: 🗄️ 영구 보관소에 저장 완료 (Unmodified)
+* **어떻게 하나요?** `git commit -m "feat: hello 파일 추가"` 명령어를 실행합니다.
+* **`git status` 입력 시**:
+  * `nothing to commit, working tree clean` (커밋할 변경사항 없음)이 뜹니다.
+  * 버전 기록에 영구 박제되어, 변경이 하나도 없는 가장 깨끗하고 안전한 상태가 됩니다.
+
+#### 4단계: ✏️ 기존 파일 수정 (Modified)
+* **어떤 상태인가요?** 보관소에 잘 저장되어 있던 `hello.txt`를 다시 열어 글자 몇 개를 수정하고 저장했을 때입니다.
+* **`git status` 입력 시**:
+  * 다시 빨간색 글씨로 `Changes not staged for commit:` 목록 아래에 `modified: hello.txt`가 뜹니다.
+  * Git이 "너 기존 파일 내용 고쳤네? 그런데 아직 커밋 상자(Staged)에는 안 담았어!"라고 말해주는 상태입니다.
+  * 이 변경 사항을 다시 저장하고 싶다면 **2단계(`git add`)**부터 반복해야 합니다.
+
+---
+
 
 ## 1. GitHub 레포지토리 시작하기
 

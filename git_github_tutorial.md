@@ -291,3 +291,40 @@ git pull origin main
 # 2. 병합이 완료되었거나 충돌을 해결했다면 다시 푸시합니다.
 git push origin 내브랜치명
 ```
+
+---
+
+## 📎 부록: 실무에서 쓰이는 브랜치 전략 — Git Flow
+
+이 가이드에서는 `main` + `feature` 브랜치만 사용하는 단순한 워크플로우를 배웠습니다. 실무에서는 프로젝트 규모가 커지면 더 체계적인 브랜치 관리 전략을 사용하는데, 그 중 가장 유명한 것이 **Git Flow**입니다.
+
+```mermaid
+gitGraph
+    commit id: "v1.0"
+    branch develop
+    commit id: "개발 시작"
+    branch feature/login
+    commit id: "로그인 구현"
+    commit id: "로그인 테스트"
+    checkout develop
+    merge feature/login id: "feature 병합"
+    branch release/1.1
+    commit id: "QA 수정"
+    checkout main
+    merge release/1.1 id: "v1.1 출시" tag: "v1.1"
+    checkout develop
+    merge release/1.1 id: "develop 반영"
+```
+
+### 5가지 브랜치 한 줄 요약
+
+| 브랜치 | 역할 | 비유 |
+|---|---|---|
+| `main` | 출시된 코드만 모아두는 곳 | 🏪 매장 진열대 |
+| `develop` | 다음 버전을 준비하는 곳 | 🏗️ 공사 현장 |
+| `feature/*` | 새 기능 하나를 만드는 곳 | 🧑‍💻 각자의 작업 책상 |
+| `release/*` | 출시 직전 마무리/QA | 🔍 품질 검사대 |
+| `hotfix/*` | 출시 후 긴급 버그 수정 | 🚒 소방차 |
+
+> [!TIP]
+> 처음에는 이 가이드에서 배운 `main` + `feature` 브랜치 워크플로우로 충분합니다. 팀 규모가 커지거나 배포 주기가 생기면 그때 Git Flow 도입을 검토하세요. 더 자세한 내용은 👉 [Git Flow 완벽 가이드](./git_flow_guide.md)를 참고하세요.

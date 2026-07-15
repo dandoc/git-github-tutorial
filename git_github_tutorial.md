@@ -53,19 +53,22 @@ graph LR
 ---
 
 ### 🔄 파일의 상태 변화 (Life Cycle)
-Working Directory에 있는 파일들은 Git에 의해 아래와 같이 상태(State)가 바뀝니다.
+Working Directory에 있는 파일들은 생성되고 수정됨에 따라 Git에 의해 아래와 같이 상태(State)가 바뀝니다.
 
 ```mermaid
-stateDiagram-v2
-    [*] --> Untracked : 새 파일 생성
-    Untracked --> Staged : git add
+flowchart TD
+    Start(["✨ 새 파일 생성"]) --> Untracked["📄 Untracked<br>(추적 불가/새 파일)"]
+    Untracked -- "git add" --> Staged["📦 Staged<br>(커밋 대기/준비됨)"]
     
-    state Tracked {
-        [*] --> Unmodified : clone 또는 commit 완료
-        Unmodified --> Modified : 파일 내용 수정
-        Modified --> Staged : git add
-        Staged --> Unmodified : git commit
-    }
+    Unmodified["🗄️ Unmodified<br>(변화 없음/커밋 완료)"] -- "✏️ 파일 내용 수정" --> Modified["✏️ Modified<br>(수정됨)"]
+    Modified -- "git add" --> Staged
+    Staged -- "git commit" --> Unmodified
+    
+    style Start fill:#eee,stroke:#333,stroke-width:1px,color:#111111
+    style Untracked fill:#f9f,stroke:#333,stroke-width:2px,color:#111111
+    style Staged fill:#bbf,stroke:#333,stroke-width:2px,color:#111111
+    style Unmodified fill:#bfb,stroke:#333,stroke-width:2px,color:#111111
+    style Modified fill:#fdd,stroke:#333,stroke-width:2px,color:#111111
 ```
 
 * **Untracked (추적 불가)**: 새로 만든 파일이라 Git이 감시를 시작하지 않은 상태

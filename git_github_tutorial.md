@@ -29,10 +29,10 @@ graph LR
         D -- "git pull (fetch + merge)" --> A
     end
     
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style B fill:#bbf,stroke:#333,stroke-width:2px
-    style C fill:#bfb,stroke:#333,stroke-width:2px
-    style D fill:#fdd,stroke:#333,stroke-width:2px
+    style A fill:#f9f,stroke:#333,stroke-width:2px,color:#111111
+    style B fill:#bbf,stroke:#333,stroke-width:2px,color:#111111
+    style C fill:#bfb,stroke:#333,stroke-width:2px,color:#111111
+    style D fill:#fdd,stroke:#333,stroke-width:2px,color:#111111
 ```
 
 ### 1. Git의 4대 작업 영역

@@ -174,13 +174,27 @@ Automatic merge failed; fix conflicts and then commit the result.
 >>>>>>> feature/greeting
 ```
 
-### 4-6. 충돌 해결하기 (VS Code GUI 기능 활용)
-코드 최상단에 작게 표시되는 **VS Code의 GUI 선택 버튼**을 클릭하여 클릭 한 번으로 해결할 수 있습니다.
-* **Accept Current Change** 클릭 시: `main`의 내용만 남고 특수문자는 자동 삭제됩니다.
-* **Accept Incoming Change** 클릭 시: `feature/greeting`의 내용만 남고 특수문자는 자동 삭제됩니다.
-* **Accept Both Changes** 클릭 시: 두 내용이 다 남습니다.
+### 4-6. 충돌 해결하기 (선택형 가이드)
 
-> 💡 **이번 실습에서는 `Accept Both Changes`를 선택하거나, 두 내용을 자연스럽게 한 문장으로 합친 후 특수 문자(`<<<<`, `====`, `>>>>`)를 직접 지우고 저장해 보세요.**
+#### 방법 A. VS Code 등 GUI 에디터 활용 시
+코드 최상단에 표시되는 선택 버튼을 클릭하여 해결합니다.
+* **Accept Current Change**: 내가 로컬에서 작성한 내용만 남김
+* **Accept Incoming Change**: 상대방(또는 다른 브랜치) 내용만 남김
+* **Accept Both Changes**: 두 내용을 위아래로 모두 남김
+
+#### 방법 B. Git Bash + 메모장(Notepad) 활용 시 (VS Code가 없을 때)
+터미널에서 윈도우 메모장을 실행해 충돌 파일을 직접 수정합니다.
+```bash
+notepad hello.txt
+```
+파일이 열리면 충돌을 식별하는 특수 기호들(`<<<<<<< HEAD`, `=======`, `>>>>>>> feature/greeting`)을 **직접 지우고**, 두 내용이 조화롭게 남도록 수정한 뒤 저장하고 창을 닫습니다.
+
+*수정 완료 후 파일 예시 (양쪽 내용 보존 시):*
+```text
+안녕하세요! Git 실습 중입니다.
+이 줄은 main 브랜치에서 추가한 다른 내용입니다!
+이 줄은 feature/greeting 브랜치에서 추가했습니다!
+```
 
 ### 4-7. 해결 완료 후 커밋하기
 ```bash
@@ -310,8 +324,10 @@ CONFLICT (content): Merge conflict in README.md
 * **이유**: 팀원 B가 로컬에서 작성한 파일 줄과, 이미 GitHub main에 올라간 팀원 A의 파일 줄이 서로 다르기 때문에 발생합니다.
 
 ### 5단계: 팀원 B가 충돌 해결하고 마무리하기 (협업 완료)
-1. **팀원 B**는 VS Code에서 `README.md`를 열고, 상단의 GUI 버튼 중 **`Accept Both Changes`**를 클릭하여 팀원 A와 팀원 B의 인사말이 위아래로 둘 다 남도록 조율합니다.
-2. 기호가 말끔히 정리된 것을 확인한 후 저장하고 머지를 매듭짓습니다.
+1. **팀원 B**는 충돌이 발생한 파일을 에디터로 엽니다.
+   * **VS Code 사용 시**: `README.md`를 열고, 상단의 GUI 버튼 중 **`Accept Both Changes`**를 클릭합니다.
+   * **Git Bash만 사용 시**: `notepad README.md` 명령어로 메모장을 실행해 특수 기호들(`<<<<<<<`, `=======`, `>>>>>>>`)을 직접 삭제하고, A와 B의 한 줄 인사가 모두 남도록 정리합니다.
+2. 기호가 말끔히 정리되고 저장된 것을 확인한 후 머지를 매듭짓습니다.
    ```bash
    # [팀원 B]
    git add README.md

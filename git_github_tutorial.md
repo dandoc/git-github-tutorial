@@ -172,6 +172,32 @@ git clone <복사한_저장소_URL>
 cd <저장소_폴더명>
 ```
 
+> [!NOTE]
+> ### ❓ 왜 `git init` 대신 `git clone`을 사용하나요?
+> 옛날 Git 가이드나 오래된 책에서는 `git init`을 가장 먼저 배우는 경우가 많습니다. 하지만 요즘 실무 및 협업 환경에서는 `git clone`으로 시작하는 것을 훨씬 권장합니다.
+>
+> * **`git clone` 방식 (GitHub 우선)**: GitHub에서 저장소를 먼저 만들고 클론해 오면, 내부적으로 `git init` + 원격 주소 연결(`git remote add origin`) + 기본 브랜치 정렬이 **한 번에 자동으로 완료**되어 초보자의 실수 유발을 원천 차단합니다.
+> * **`git init` 방식 (로컬 우선)**: 내 컴퓨터에서 혼자 코딩하다가 나중에 Git으로 관리하고 싶을 때 사용합니다. 로컬에서 `git init`을 한 뒤 수동으로 GitHub을 연결하는 방식은 브랜치 이름 꼬임(`master` vs `main`)이나 첫 병합 시 충돌(`unrelated histories`) 등의 문제를 겪기 쉽습니다.
+>
+> 만약 **이미 작업 중인 로컬 폴더**에서 `git init`으로 시작해 GitHub에 연결하려면 아래 흐름을 따릅니다:
+> ```bash
+> # 1. 작업 폴더에서 Git 저장소 초기화 (.git 폴더 생성)
+> git init
+>
+> # 2. 기본 브랜치 명을 GitHub 표준인 main으로 통일 (매우 중요!)
+> git branch -M main
+>
+> # 3. 파일 add 및 첫 커밋 생성
+> git add .
+> git commit -m "feat: 최초 프로젝트 파일 추가"
+>
+> # 4. GitHub 원격 저장소 연결
+> git remote add origin <GitHub_레포지토리_주소>
+>
+> # 5. 원격 저장소에 업로드
+> git push -u origin main
+> ```
+
 ---
 
 ## .gitignore: 올리면 안 되는 파일 관리하기

@@ -224,3 +224,69 @@ flowchart LR
 
 > [!NOTE]
 > 현재 팀 규모와 프로젝트 성격에서는 **Feature Branch 워크플로우**([기본 가이드](./git_github_tutorial.md)에서 배운 방식)로 충분합니다. Git Flow는 팀이 10명 이상이거나, 앱스토어 심사처럼 명확한 릴리스 주기가 있을 때 빛을 발합니다.
+
+---
+
+## 🔀 GitHub Flow: 가장 단순한 실무 브랜치 전략
+
+GitHub Flow는 Git Flow의 복잡함을 줄이고, **PR 머지 = 즉시 배포**라는 원칙 위에 만들어진 가장 단순한 브랜치 전략입니다. 웹 서비스처럼 수시로 업데이트하는 프로젝트에 적합합니다.
+
+### 핵심 규칙 (딱 3가지)
+1. `main` 브랜치는 **항상 배포 가능한 상태**를 유지합니다.
+2. 새로운 작업은 **`main`에서 분기한 `feature` 브랜치**에서 진행합니다.
+3. 작업이 끝나면 **PR을 열고, 리뷰를 받고, `main`에 머지하면 곧바로 배포**됩니다.
+
+```mermaid
+gitGraph
+    commit id: "v1.0"
+    branch feature/login
+    commit id: "로그인 UI"
+    commit id: "로그인 API"
+    checkout main
+    merge feature/login id: "PR 머지 → 배포" tag: "deploy"
+    branch feature/signup
+    commit id: "회원가입 폼"
+    commit id: "회원가입 검증"
+    checkout main
+    merge feature/signup id: "PR 머지 → 배포" tag: "deploy"
+```
+
+### 전체 흐름 (명령어)
+```bash
+# 1. main에서 최신 코드를 받고 작업 브랜치 생성
+git switch main
+git pull origin main
+git switch -c feature/search
+
+# 2. 기능 개발 및 커밋
+git add .
+git commit -m "[#8] feat: 검색 기능 구현"
+
+# 3. GitHub에 올리기
+git push origin feature/search
+
+# 4. GitHub에서 PR 생성 → 팀원 리뷰 → Merge
+#    (머지 즉시 자동 배포가 이루어지는 것이 GitHub Flow의 핵심)
+
+# 5. 로컬 정리
+git switch main
+git pull origin main
+git branch -d feature/search
+```
+
+### Git Flow와 직접 비교
+
+| 구분 | Git Flow | GitHub Flow |
+|---|---|---|
+| 영구 브랜치 | `main` + `develop` | `main`만 |
+| 배포 시점 | `release` 브랜치 머지 시 | **PR 머지 즉시** |
+| 복잡도 | 높음 (5종류 브랜치) | 낮음 (2종류 브랜치) |
+| 적합한 환경 | 앱스토어 심사, 정기 배포 | 웹 서비스, 지속적 배포(CD) |
+| CI/CD | 권장 | **필수** (자동 테스트·배포) |
+| 긴급 버그 수정 | `hotfix` 브랜치 별도 생성 | 일반 `feature` 브랜치로 동일 처리 |
+
+> [!TIP]
+> **어떤 전략을 선택해야 할까?**
+> * **팀 프로젝트 수업·해커톤** → Feature Branch 워크플로우 ([기본 가이드](./git_github_tutorial.md))
+> * **웹 서비스 스타트업·사이드 프로젝트** → **GitHub Flow** (이 섹션)
+> * **대규모 팀·모바일 앱·정기 릴리스** → Git Flow (이 문서의 메인 내용)
